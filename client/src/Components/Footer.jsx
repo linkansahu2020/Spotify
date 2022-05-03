@@ -64,6 +64,9 @@ line-height: 0vh;
 justify-content: space-between;
 background: black;
 color: white;
+@media (max-width: 1024px) {
+    padding: 5vh 3vw;
+}
 `
 const InnerDiv = styled.div`
 width: 100%;
@@ -76,16 +79,42 @@ justify-content: space-between;
 position: relative;
 left: 10vw;
 line-height: 2vh;
+@media (max-width: 1024px) {
+    width: 50vw;
+    left: 20vw;
+}
+@media (max-width: 760px) {
+    display: block;
+    left: 0;
+    top: 5vh;
+    &>div{
+        margin-bottom: 5vh;
+        margin-left: 4vh;
+        line-height: 3vh;
+    }
+}
 `
 const LogoDiv = styled.div`
 width: 7vw;
 position: absolute;
 left: 0;
+@media (max-width: 1024px) {
+    width: 17vw;
+}
+@media (max-width: 760px) {
+    width: 25vw;
+}
 `
 const HeadText = styled.p`
 font-weight: bold;
 font-size: 1.4vh;
 color: #929496;
+@media (max-width: 1024px) {
+    font-size: 1.2vh;
+}
+@media (max-width: 760px) {
+    font-size: 1.5vh;
+}
 `
 const Text = styled.p`
 font-weight: bold;
@@ -94,6 +123,12 @@ font-size: 1.5vh;
 &:hover{
     color: #1cd860;
 }
+@media (max-width: 1024px) {
+    font-size: 1.25vh;
+}
+@media (max-width: 760px) {
+    font-size: 1.45vh;
+}
 `
 const SocialMedia = styled.div`
 position: absolute;
@@ -101,6 +136,9 @@ right: 0;
 top: 0;
 display: flex;
 gap: .6vw;
+@media (max-width: 1024px) {
+    gap: 1vw;
+}
 `
 const Media = styled.div`
 background: #222326;
@@ -110,6 +148,12 @@ font-size: 2.4vh;
 cursor: pointer;
 &:hover{
     color: #1cd860;
+}
+@media (max-width: 1024px) {
+    padding: .8vh 1vw;
+}
+@media (max-width: 760px) {
+    padding: .8vh 1.5vw;
 }
 `
 const MinorDiv = styled.div`
@@ -122,6 +166,9 @@ color: #929496;
     cursor: pointer;
     &:hover{
         color: #1cd860;
+    }
+    @media (max-width: 1024px) {
+        font-size: 1.2vh;
     }
 }
 `

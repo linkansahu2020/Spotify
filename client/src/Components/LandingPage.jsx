@@ -1,11 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
 import Footer from './Footer'
+import Navbar from './Navbar'
 // import { Button } from './ReuseableComponents'
 
 export default function LandingPage() {
   return (
     <div>
+        <Navbar/>
         <PinkContainer>
             <TextContainer>
                 <SmallText>SPOTIFY PREMIUM</SmallText>
@@ -38,6 +40,13 @@ line-height: 0vh;
 justify-content: space-between;
 background: #983399;
 color: white;
+@media (max-width: 1024px) {
+    padding: 5vh 3vw;
+    display: block;
+}
+@media (max-width: 760px) {
+    text-align: center;
+}
 `
 const BlueContainer = styled.div`
 text-align: left;
@@ -51,24 +60,57 @@ background-size: auto 100%;
 background-repeat: no-repeat;
 background-image: url(${'https://content-tooling.spotifycdn.com/images/b236bf87-bfd5-4bcb-b51a-77881073039c_lie_circles.svg'});
 background-position: right center;
+@media (max-width: 1024px) {
+    padding: 5vh 3vw;
+    display: block;
+    background-size: auto 100%;
+    background-image: url(${'https://content-tooling.spotifycdn.com/images/1d2242b4-f071-4244-a276-3bcdc58e77cf_lie_circles-tablet.svg'});
+    background-position: center center;
+    background-size: auto 181%;
+    background-repeat: no-repeat;
+    text-align: center;
+}
 `
 const TextContainer = styled.div`
 `
 const ImageDiv = styled.div`
 width: 27vw;
 margin: auto 0px;
+@media (max-width: 1024px) {
+    width: 45vw;
+    margin: auto;
+}
+@media (max-width: 760px) {
+    width: 75vw;
+}
 `
 const BigContent = styled.p`
 font-size: 6vh;
 font-weight: bold;
 line-height: 6.5vh;
+@media (max-width: 1024px) {
+    font-size: 5.3vh;
+}
+@media (max-width: 760px) {
+    font-size: 5.5vw;
+}
 `
-const SmallText = styled.p`
-font-size: 1.5vh
+export const SmallText = styled.p`
+font-size: 1.5vh;
+@media (max-width: 1024px) {
+    font-size: 1.3vh;
+    text-align: center;
+}
 `
 const MediumText = styled.p`
 font-size: 2.5vh;
 line-height: 3.7vh;
+@media (max-width: 1024px) {
+    font-size: 2.3vh;
+}
+@media (max-width: 760px) {
+    font-size: 4.3vw;
+}
 `
 const AltraSmallText = styled.p`
 font-size: 1.3vh;
