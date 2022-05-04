@@ -96,13 +96,17 @@ line-height: 6.5vh;
 }
 `
 export const SmallText = styled.p`
-font-size: 1.5vh;
+font-size: .7vw;
 @media (max-width: 1024px) {
-    font-size: 1.3vh;
+    font-size: 2vw;
+    text-align: center;
+}
+@media (max-width: 760px) {
+    font-size: 3.6vw;
     text-align: center;
 }
 `
-const MediumText = styled.p`
+export const MediumText = styled.p`
 font-size: 2.5vh;
 line-height: 3.7vh;
 @media (max-width: 1024px) {
@@ -113,8 +117,14 @@ line-height: 3.7vh;
 }
 `
 const AltraSmallText = styled.p`
-font-size: 1.3vh;
+font-size: .65vw;
 line-height: 1.4vh;
+@media (max-width: 1024px) {
+    font-size: 1vw;
+}
+@media (max-width: 760px) {
+    font-size: 2.5vw;
+}
 `
 const Button = styled.button`
 margin-left: .3vw;

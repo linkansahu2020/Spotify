@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { FaApple,FaFacebookSquare } from 'react-icons/fa';
-import { SmallText } from './LandingPage';
+import { MediumText, SmallText } from './LandingPage';
 
 export default function Login() {
   return (
@@ -39,19 +39,21 @@ export default function Login() {
                 </SmallText>
                 <Checkbox type="checkbox" name="remember_me" value='true' id="remember_me"/>
                 <label style={{fontSize:'14px'}} for="remember_me">Remember me</label>
+                <LoginButton>LOG IN</LoginButton>
             </InputDiv>
-            <div style={{border: '1px solid gainsboro'}}></div>
+            <div style={{border: '1px solid gainsboro',marginTop:'3vh'}}></div>
+            <AccountHave>Do you have an account?</AccountHave>
             <ContinueButton color='#6a6a6a'>SIGN UP FOR SPOTIFY</ContinueButton>
         </FormDiv>
     </div>
   )
 }
-const LogoContainer = styled.div`
+export const LogoContainer = styled.div`
 border-bottom: 1px solid #d9dadc;
 padding: 2vh;
 width: 100%;
 `
-const Logo = styled.div`
+export const Logo = styled.div`
 width: 10vw;
 margin: auto;
 @media (max-width: 1024px){
@@ -62,7 +64,7 @@ margin: auto;
     margin: auto;
 }
 `
-const FormDiv = styled.div`
+export const FormDiv = styled.div`
 width: 45vh;
 margin: auto;
 margin-top: 2vh;
@@ -70,7 +72,7 @@ margin-top: 2vh;
     width: 98%;
 }
 `
-const ContinueButton = styled.div`
+export const ContinueButton = styled.div`
 width: 100%;
 border: 1px solid darkgray;
 padding: 3.5% 0px;
@@ -91,7 +93,7 @@ cursor: pointer;
     top: 1vh;
 }
 `
-const OrDiv = styled.div`
+export const OrDiv = styled.div`
 font-weight: bold;
 font-size: 12px;
 margin: 2vh auto;
@@ -106,6 +108,7 @@ justify-content: space-between;
 `
 export const InputDiv = styled.div`
 text-align: left;
+position: relative;
 &>#forgot_password:hover{
     text-decoration: underline;
 }
@@ -138,13 +141,36 @@ appearance: none;
         box-shadow: inset 0 0 0 3px var(--essential-base,#000000);
         // box-shadow: inset 0 0 0 3px var(--essential-negative,#e91429);
     }
-@media (min-width: 760px){
-    font-size: 1rem;
-    line-height: 1.5rem;
-    text-transform: none;
-    letter-spacing: normal;
-}
+// @media (min-width: 760px){
+//     font-size: 1rem;
+//     line-height: 1.5rem;
+//     text-transform: none;
+//     letter-spacing: normal;
+// }
 `
 const Checkbox = styled.input`
 color: red;
+`
+export const AccountHave = styled.div`
+font-weight: bold;
+font-size: 1vw;
+margin-top: 1vh;
+@media (max-width: 760px){
+    font-size: 3vw;
+    margin-top: 1vh;
+}
+`
+export const LoginButton = styled.div`
+background: #1cd860;
+font-weight: bold;
+font-size: 90%;
+padding: 3% 6%;
+width: auto;
+border-radius: 50px;
+position: absolute;
+right: 0;
+top: 5px;
+@media (max-width: 760px){
+    font-size: 75%;
+}
 `
