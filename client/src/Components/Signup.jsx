@@ -1,9 +1,25 @@
-import React from 'react'
+import React,{useEffect, useState} from 'react'
 import styled from 'styled-components'
 import { SmallText } from './LandingPage'
-import { FormDiv, Input, InputDiv, Logo, LogoContainer, OrDiv } from './Login'
+import { ContinueButton, FormDiv, Input, InputDiv, Logo, LogoContainer, OrDiv } from './Login'
+import { FaFacebookSquare } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 export default function Signup() {
+    const [userData,setUserData] = useState({
+        email: '',
+        conform_email: '',
+        password: '',
+        username: ''
+    })
+    useEffect(()=>{
+        document.getElementsByTagName('title')[0].innerText = 'Sign up - Spotify';
+    },[]);
+    console.log(userData);
+    const handelChange = (event)=>{
+        setUserData({...userData,[event.target.name]:event.target.value});
+    }
+    
   return (
     <div>
         <LogoContainer>
@@ -12,6 +28,11 @@ export default function Signup() {
             </Logo>
         </LogoContainer>
         <FormDiv>
+            <ContinueButton color='whitesmoke' background='#3b5998'><FaFacebookSquare className='logo'/> CONTINUE WITH FACEBOOK</ContinueButton>
+            <ContinueButton color='#6a6a6a'>
+                <img src="https://imgs.search.brave.com/YKmkf4jY-3uPEAMwszoQeBxLi74CoPJqzoePtO0SriA/rs:fit:1200:1200:1/g:ce/aHR0cHM6Ly9zNDgy/Ny5wY2RuLmNvL3dw/LWNvbnRlbnQvdXBs/b2Fkcy8yMDE4LzA0/L0dvb2dsZS1sb2dv/LTIwMTUtRy1pY29u/LnBuZw" width='35px' className='google_logo' alt="" />
+                CONTINUE WITH GOOGLE
+            </ContinueButton>
             <OrDiv>
                 <div></div>
                 OR
@@ -19,26 +40,28 @@ export default function Signup() {
             </OrDiv>
             <InputDiv>
                 <SmallText className='text_div' style={{fontWeight: 'bold'}}>What is your email?</SmallText>
-                <Input type='text' placeholder='Enter your email.'/>
+                <Input type='text' onChange={handelChange} name='email' placeholder='Enter your email.'/>
             </InputDiv>
             <InputDiv>
                 <SmallText className='text_div' style={{fontWeight: 'bold'}}>Confirm your email</SmallText>
-                <Input type='text' placeholder='Enter your email again.'/>
+                <Input type='text' onChange={handelChange} name='conform_email' placeholder='Enter your email again.'/>
             </InputDiv>
             <InputDiv>
                 <SmallText className='text_div' style={{fontWeight: 'bold'}}>Create a password</SmallText>
-                <Input type='text' placeholder='Create a password'/>
+                <Input type='text' onChange={handelChange} name='password' placeholder='Create a password'/>
             </InputDiv>
             <InputDiv style={{marginBottom: '2vh'}}>
                 <SmallText className='text_div' style={{fontWeight: 'bold'}}>What should we call you?</SmallText>
-                <Input type='text' placeholder='Enter a profile name'/>
+                <Input type='text' onChange={handelChange} name='username' placeholder='Enter a profile name'/>
                 <span style={{fontSize: '13px'}}>This appers in your profile.</span>
             </InputDiv>
             <span style={{fontSize: '13px'}}>To learn more about how Spotify collects, uses, shares and protects your personal data, please see <u style={{color: '#1cd860',cursor:'pointer'}}>Spotify's Privacy Policy.</u></span>
             <SingupButton>Sign up</SingupButton>
             <SmallText className='text_div' style={{fontWeight: 'bold'}}>
                 Have an account? 
-                <u style={{color: '#1cd860',cursor:'pointer'}}> Log in</u>
+                <Link to='/login'>
+                    <u style={{color: '#1cd860',cursor:'pointer'}}> Log in</u>
+                </Link>
             </SmallText>
         </FormDiv>
 

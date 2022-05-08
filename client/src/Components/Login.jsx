@@ -1,9 +1,20 @@
-import React from 'react'
+import React,{ useState,useEffect } from 'react'
 import styled from 'styled-components'
 import { FaApple,FaFacebookSquare } from 'react-icons/fa';
-import { MediumText, SmallText } from './LandingPage';
+import { SmallText } from './LandingPage';
+import { Link } from 'react-router-dom';
 
 export default function Login() {
+    const [userData,setUserData] = useState({
+        email: '',
+        password: ''
+    });
+    useEffect(()=>{
+        document.getElementsByTagName('title')[0].innerText = 'Log in - Spotify'
+    },[])
+    const handelChange = (event)=>{
+        setUserData({...userData,[event.target.name]:event.target.value});
+    }
   return (
     <div>
         <LogoContainer>
@@ -27,11 +38,11 @@ export default function Login() {
             </OrDiv>
             <InputDiv>
                 <SmallText className='text_div' style={{fontWeight: 'bold'}}>Email address or username</SmallText>
-                <Input type='text' placeholder='Email address or username'/>
+                <Input value={userData.email} onChange={handelChange} name='email' type='text' placeholder='Email address or username'/>
             </InputDiv>
             <InputDiv>
                 <SmallText className='text_div' style={{fontWeight: 'bold'}}>Password</SmallText>
-                <Input type='text' placeholder='Password'/>
+                <Input value={userData.password} onChange={handelChange} name='password' type='text' placeholder='Password'/>
             </InputDiv>
             <InputDiv>
                 <SmallText className='text_div' id='forgot_password' style={{fontWeight: 'bold'}}>
@@ -43,7 +54,9 @@ export default function Login() {
             </InputDiv>
             <div style={{border: '1px solid gainsboro',marginTop:'3vh'}}></div>
             <AccountHave>Do you have an account?</AccountHave>
-            <ContinueButton color='#6a6a6a'>SIGN UP FOR SPOTIFY</ContinueButton>
+            <Link to="/signup" style={{textDecoration:'none'}}>
+                <ContinueButton color='#6a6a6a'>SIGN UP FOR SPOTIFY</ContinueButton>
+            </Link>
         </FormDiv>
     </div>
   )

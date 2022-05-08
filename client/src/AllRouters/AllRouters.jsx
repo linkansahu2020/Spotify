@@ -8,8 +8,8 @@ export default function AllRouters() {
   return (
     <Routes>
         <Route path='/' element={<LandingPage/>}></Route>
-        <Route path='/' element={<Login/>}></Route>
-        <Route path='/' element={<Signup/>}></Route>
+        <Route path='/login' element={<Login/>}></Route>
+        <Route path='/signup' element={<Signup/>}></Route>
     </Routes>
   )
 }

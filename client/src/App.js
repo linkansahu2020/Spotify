@@ -4,7 +4,7 @@ import AllRouters from './AllRouters/AllRouters';
 
 function App() {
   return (
-    <div className="App">
+    <div className="app">
       <AllRouters/>
     </div>
   );
