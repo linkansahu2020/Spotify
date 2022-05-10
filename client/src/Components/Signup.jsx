@@ -4,6 +4,7 @@ import { SmallText } from './LandingPage'
 import { ContinueButton, FormDiv, Input, InputDiv, Logo, LogoContainer, OrDiv } from './Login'
 import { FaFacebookSquare } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import { signInWithFacebook, signInWithGoogle } from '../Firebase/firebase';
 
 export default function Signup() {
     const [userData,setUserData] = useState({
@@ -28,8 +29,8 @@ export default function Signup() {
             </Logo>
         </LogoContainer>
         <FormDiv>
-            <ContinueButton color='whitesmoke' background='#3b5998'><FaFacebookSquare className='logo'/> CONTINUE WITH FACEBOOK</ContinueButton>
-            <ContinueButton color='#6a6a6a'>
+            <ContinueButton color='whitesmoke' background='#3b5998' onClick={signInWithFacebook}><FaFacebookSquare className='logo'/> CONTINUE WITH FACEBOOK</ContinueButton>
+            <ContinueButton color='#6a6a6a' onClick={signInWithGoogle}>
                 <img src="https://imgs.search.brave.com/YKmkf4jY-3uPEAMwszoQeBxLi74CoPJqzoePtO0SriA/rs:fit:1200:1200:1/g:ce/aHR0cHM6Ly9zNDgy/Ny5wY2RuLmNvL3dw/LWNvbnRlbnQvdXBs/b2Fkcy8yMDE4LzA0/L0dvb2dsZS1sb2dv/LTIwMTUtRy1pY29u/LnBuZw" width='35px' className='google_logo' alt="" />
                 CONTINUE WITH GOOGLE
             </ContinueButton>

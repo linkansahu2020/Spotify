@@ -1,7 +1,9 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 
 export default function Navbar() {
+    const navigate = useNavigate();
   return (
     <Container>
         <LogoDiv>
@@ -16,8 +18,12 @@ export default function Navbar() {
                 margin: 'auto',
                 borderRight: '.1px solid white',
             }}></div>
-            <Text>Sign up</Text>
-            <Text>Sign in</Text>
+            <Text onClick={()=>navigate('/signup')}>
+                Sign up
+            </Text>
+            <Text onClick={()=>navigate('/login')}>
+                Sign in
+            </Text>
         </MenuDiv>
     </Container>
   )
