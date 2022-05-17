@@ -10,7 +10,7 @@ export default function Login() {
         password: ''
     });
     useEffect(()=>{
-        document.getElementsByTagName('title')[0].innerText = 'Log in - Spotify'
+        document.getElementsByTagName('title')[0].innerText = 'Log in - Spotify';
     },[])
     const handelChange = (event)=>{
         setUserData({...userData,[event.target.name]:event.target.value});

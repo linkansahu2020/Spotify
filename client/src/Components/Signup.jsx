@@ -5,6 +5,7 @@ import { ContinueButton, FormDiv, Input, InputDiv, Logo, LogoContainer, OrDiv } 
 import { FaFacebookSquare } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { signInWithFacebook, signInWithGoogle } from '../Firebase/firebase';
+import axios from 'axios'
 
 export default function Signup() {
     const [userData,setUserData] = useState({
@@ -15,8 +16,8 @@ export default function Signup() {
     })
     useEffect(()=>{
         document.getElementsByTagName('title')[0].innerText = 'Sign up - Spotify';
+        axios.get('http://localhost:2567/gallery/62812ca49ce8826da17a20eb')
     },[]);
-    console.log(userData);
     const handelChange = (event)=>{
         setUserData({...userData,[event.target.name]:event.target.value});
     }
@@ -30,7 +31,7 @@ export default function Signup() {
         </LogoContainer>
         <FormDiv>
             <ContinueButton color='whitesmoke' background='#3b5998' onClick={signInWithFacebook}><FaFacebookSquare className='logo'/> CONTINUE WITH FACEBOOK</ContinueButton>
-            <ContinueButton color='#6a6a6a' onClick={signInWithGoogle}>
+            <ContinueButton color='#6a6a6a' onClick={()=>signInWithGoogle("hello")}>
                 <img src="https://imgs.search.brave.com/YKmkf4jY-3uPEAMwszoQeBxLi74CoPJqzoePtO0SriA/rs:fit:1200:1200:1/g:ce/aHR0cHM6Ly9zNDgy/Ny5wY2RuLmNvL3dw/LWNvbnRlbnQvdXBs/b2Fkcy8yMDE4LzA0/L0dvb2dsZS1sb2dv/LTIwMTUtRy1pY29u/LnBuZw" width='35px' className='google_logo' alt="" />
                 CONTINUE WITH GOOGLE
             </ContinueButton>
