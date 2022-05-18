@@ -9,6 +9,8 @@ import reportWebVitals from './reportWebVitals';
 import './index.css';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
+import {Provider as ReduxProvider} from 'react-redux'
+import { store } from './Redux/store';
 
 // i18n
 //   .use(initReactI18next) // passes i18n down to react-i18next
@@ -38,7 +40,9 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <App />
+      <ReduxProvider store={store}>
+        <App />
+      </ReduxProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

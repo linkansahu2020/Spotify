@@ -1,15 +1,17 @@
 import React from 'react'
 import styled from 'styled-components'
 import AudioPlayer from './AudioPlayer'
-import Body from './Body'
 import SideBar from './SideBar'
+import Body from './Body'
 
-export default function WholeContainer() {
+export default function WholeContainer({body}) {
   return (
     <>
     <Container>
         <SideBar/>
-        <Body/>
+        <Body>
+          {body}
+        </Body>
     </Container>
     <AudioPlayer/>
     </>

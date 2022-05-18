@@ -94,7 +94,7 @@ line-height: 2vh;
     }
 }
 `
-const LogoDiv = styled.div`
+export const LogoDiv = styled.div`
 width: 7vw;
 position: absolute;
 left: 0;

@@ -10,7 +10,7 @@ export default function AllRouters() {
   return (
     <Routes>
         {/* <Route path='/' element={<LandingPage/>}></Route> */}
-        <Route path='/' element={<WholeContainer/>}></Route>
+        <Route path='/' element={<WholeContainer body={"Container"}/>}></Route>
         <Route path='/login' element={<Login/>}></Route>
         <Route path='/signup' element={<Signup/>}></Route>
     </Routes>

@@ -1,15 +1,18 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 
-export default function Body() {
+export default function Body({children}) {
+  const background = useSelector((state)=>state.background)
   return (
-    <Container>Body</Container>
+    <Container background={background}>{children}</Container>
   )
 }
 
 const Container = styled.div`
-flex: 0.8;
+flex: 0.85;
 height: 100vh;
-background-image: linear-gradient(red, rgb(35, 35, 35), rgb(35, 35, 35), rgb(35, 35, 35));
+transition: 200ms background-image ease-in;
+background-image: linear-gradient(${(props)=>props.background}, ${(props)=>props.background}, rgb(35, 35, 35), rgb(35, 35, 35), rgb(35, 35, 35));
 overflow-y: overlay;
 `
