@@ -5,21 +5,52 @@ import { ContinueButton, FormDiv, Input, InputDiv, Logo, LogoContainer, OrDiv } 
 import { FaFacebookSquare } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { signInWithFacebook, signInWithGoogle } from '../Firebase/firebase';
+import axios from 'axios';
 
 export default function Signup() {
+    const passwordValidation = /((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/;
+    const emailValidation = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
     const [userData,setUserData] = useState({
         email: '',
         conform_email: '',
         password: '',
         username: ''
     })
+    const [alertMessage,setAlertMessage] = useState({
+        display: 'none',
+        message: ''
+    })
+
     useEffect(()=>{
         document.getElementsByTagName('title')[0].innerText = 'Sign up - Spotify';
     },[]);
+
     const handelChange = (event)=>{
+        setAlertMessage({display: 'none', message: ''})
         setUserData({...userData,[event.target.name]:event.target.value});
     }
     
+    const handelSignup = ()=>{
+        if(userData.email !== userData.conform_email){
+            setAlertMessage({display: 'bolck', message: 'Email is not matching'})
+            return;
+        }
+        if(!emailValidation.test(userData.email)){
+            setAlertMessage({display: 'bolck', message: 'Please provide valid email id'})
+            return;
+        }
+        if(!passwordValidation.test(userData.password)){
+            setAlertMessage({display: 'bolck', message: 'Password must containg 8 charecters having at least one uppercase latter and special characters'})
+            return;
+        }
+        axios.post('http://localhost:8080/signup',{
+            email: userData.email,
+            password: userData.password,
+            display_name: userData.username,
+        })
+    }
+
   return (
     <div>
         <LogoContainer>
@@ -28,8 +59,12 @@ export default function Signup() {
             </Logo>
         </LogoContainer>
         <FormDiv>
-            <ContinueButton color='whitesmoke' background='#3b5998' onClick={signInWithFacebook}><FaFacebookSquare className='logo'/> CONTINUE WITH FACEBOOK</ContinueButton>
-            <ContinueButton color='#6a6a6a' onClick={()=>signInWithGoogle("hello")}>
+            <AlertDiv display={alertMessage.display}>{alertMessage.message}</AlertDiv>
+            <ContinueButton color='whitesmoke' background='#3b5998' onClick={()=>{
+                const user = signInWithFacebook()
+                console.log(user)
+            }}><FaFacebookSquare className='logo'/> CONTINUE WITH FACEBOOK</ContinueButton>
+            <ContinueButton color='#6a6a6a' onClick={()=>signInWithGoogle()}>
                 <img src="https://imgs.search.brave.com/YKmkf4jY-3uPEAMwszoQeBxLi74CoPJqzoePtO0SriA/rs:fit:1200:1200:1/g:ce/aHR0cHM6Ly9zNDgy/Ny5wY2RuLmNvL3dw/LWNvbnRlbnQvdXBs/b2Fkcy8yMDE4LzA0/L0dvb2dsZS1sb2dv/LTIwMTUtRy1pY29u/LnBuZw" width='35px' className='google_logo' alt="" />
                 CONTINUE WITH GOOGLE
             </ContinueButton>
@@ -56,7 +91,7 @@ export default function Signup() {
                 <span style={{fontSize: '13px'}}>This appers in your profile.</span>
             </InputDiv>
             <span style={{fontSize: '13px'}}>To learn more about how Spotify collects, uses, shares and protects your personal data, please see <u style={{color: '#1cd860',cursor:'pointer'}}>Spotify's Privacy Policy.</u></span>
-            <SingupButton>Sign up</SingupButton>
+            <SingupButton onClick={handelSignup}>Sign up</SingupButton>
             <SmallText className='text_div' style={{fontWeight: 'bold'}}>
                 Have an account? 
                 <Link to='/login'>
@@ -76,4 +111,14 @@ border-radius: 50px;
 margin: 1vh auto;
 width: 20%;
 cursor: pointer;
+`
+export const AlertDiv = styled.div`
+background: rgba(227, 124, 124, 0.481);
+padding: 3.5% 10px;
+border-radius: 4px;
+text-align: left;
+font-size: 12px;
+font-weight: bold;
+color: grey;
+display: ${props=>props.display};
 `

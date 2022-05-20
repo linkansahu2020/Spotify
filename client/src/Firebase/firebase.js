@@ -17,20 +17,61 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 
 
-export const signInWithGoogle = ()=>{
+export const signInWithGoogle = (value)=>{
     const provider = new GoogleAuthProvider();
-    signInWithPopup(auth,provider).then(result=>{
-        console.log(result)
-    }).catch(error=>{
-        console.log(error)
-    })
+    if(value==='signin'){
+        signInWithPopup(auth,provider).then(async(result)=>{
+            try{
+                const response = await fetch('http://localhost:8080/signup',{
+                    method: "POST",
+                    body: JSON.stringify({
+                        email: result.user.email,
+                        password: "Google@1234",
+                        display_name: result.user.email.split("@")[0],
+                        display_picture: result.user.photoURL
+                    }),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                const data = await response.json();
+                window.location.href = '/login'
+            } catch(err){
+                console.log("Error:",err);
+            }
+        }).catch(error=>{
+            console.log("Error:", error)
+        })
+    } else{
+        signInWithPopup(auth,provider).then(async(result)=>{
+            try{
+                const response = await fetch('http://localhost:8080/login',{
+                    method: "POST",
+                    body: JSON.stringify({
+                        email: result.user.email,
+                        password: "Google@1234"
+                    }),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                const data = await response.json();
+                console.log(data);
+                window.location.href = '/'
+            } catch(err){
+                console.log("Error:",err);
+            }
+        }).catch(error=>{
+            console.log("Error:", error)
+        })
+    }
 }
 
 export const signInWithFacebook = ()=>{
     const provider = new FacebookAuthProvider()
     signInWithPopup(auth,provider).then(result=>{
-        console.log(result);
+        return result.user
     }).catch(error=>{
-        console.log(error);
+        console.log("Error:", error);
     })
 }

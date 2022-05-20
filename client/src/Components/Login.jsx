@@ -2,18 +2,47 @@ import React,{ useState,useEffect } from 'react'
 import styled from 'styled-components'
 import { FaApple,FaFacebookSquare } from 'react-icons/fa';
 import { SmallText } from './LandingPage';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { AlertDiv } from './Signup';
+import { signInWithFacebook, signInWithGoogle } from '../Firebase/firebase';
+import axios from 'axios';
 
 export default function Login() {
+    const passwordValidation = /((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/;
+    const emailValidation = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
     const [userData,setUserData] = useState({
         email: '',
         password: ''
     });
+    const [alertMessage,setAlertMessage] = useState({
+        display: 'none',
+        message: 'Please provide valid email id or password'
+    })
+    const navigate = useNavigate();
+
+
     useEffect(()=>{
         document.getElementsByTagName('title')[0].innerText = 'Log in - Spotify';
     },[])
+
     const handelChange = (event)=>{
+        setAlertMessage({...alertMessage,display: 'none'})
         setUserData({...userData,[event.target.name]:event.target.value});
+    }
+
+    const handelLogin = ()=>{
+        if(!emailValidation.test(userData.email)){
+            setAlertMessage({...alertMessage,display: 'bolck'})
+            return;
+        }
+        if(!passwordValidation.test(userData.password)){
+            setAlertMessage({...alertMessage,display: 'bolck'})
+            return;
+        }
+        axios.post('http://localhost:8080/login',userData).then(res=>{
+            navigate('/')
+        })
     }
   return (
     <div>
@@ -24,9 +53,10 @@ export default function Login() {
         </LogoContainer>
         <FormDiv>
             <SmallText style={{fontWeight: 'bold'}}>To continue, log in to Spotify.</SmallText>
-            <ContinueButton color='whitesmoke' background='#3b5998'><FaFacebookSquare className='logo'/> CONTINUE WITH FACEBOOK</ContinueButton>
+            <AlertDiv display={alertMessage.display}>{alertMessage.message}</AlertDiv>
+            <ContinueButton color='whitesmoke' background='#3b5998' onClick={()=>signInWithFacebook("login")}><FaFacebookSquare className='logo'/> CONTINUE WITH FACEBOOK</ContinueButton>
             <ContinueButton color='whitesmoke' background='#191919'><FaApple className='logo'/> CONTINUE WITH APPLE</ContinueButton>
-            <ContinueButton color='#6a6a6a'>
+            <ContinueButton color='#6a6a6a' onClick={()=>signInWithGoogle("login")}>
                 <img src="https://imgs.search.brave.com/YKmkf4jY-3uPEAMwszoQeBxLi74CoPJqzoePtO0SriA/rs:fit:1200:1200:1/g:ce/aHR0cHM6Ly9zNDgy/Ny5wY2RuLmNvL3dw/LWNvbnRlbnQvdXBs/b2Fkcy8yMDE4LzA0/L0dvb2dsZS1sb2dv/LTIwMTUtRy1pY29u/LnBuZw" width='35px' className='google_logo' alt="" />
                 CONTINUE WITH GOOGLE
             </ContinueButton>
@@ -37,12 +67,12 @@ export default function Login() {
                 <div></div>
             </OrDiv>
             <InputDiv>
-                <SmallText className='text_div' style={{fontWeight: 'bold'}}>Email address or username</SmallText>
-                <Input value={userData.email} onChange={handelChange} name='email' type='text' placeholder='Email address or username'/>
+                <SmallText className='text_div' style={{fontWeight: 'bold'}}>Email address</SmallText>
+                <Input value={userData.email} onChange={handelChange} name='email' type='text' placeholder='Email address'/>
             </InputDiv>
             <InputDiv>
                 <SmallText className='text_div' style={{fontWeight: 'bold'}}>Password</SmallText>
-                <Input value={userData.password} onChange={handelChange} name='password' type='text' placeholder='Password'/>
+                <Input value={userData.password} onChange={handelChange} name='password' type='password' placeholder='Password'/>
             </InputDiv>
             <InputDiv>
                 <SmallText className='text_div' id='forgot_password' style={{fontWeight: 'bold'}}>
@@ -50,7 +80,7 @@ export default function Login() {
                 </SmallText>
                 <Checkbox type="checkbox" name="remember_me" value='true' id="remember_me"/>
                 <label style={{fontSize:'14px'}} for="remember_me">Remember me</label>
-                <LoginButton>LOG IN</LoginButton>
+                <LoginButton onClick={handelLogin}>LOG IN</LoginButton>
             </InputDiv>
             <div style={{border: '1px solid gainsboro',marginTop:'3vh'}}></div>
             <AccountHave>Do you have an account?</AccountHave>
@@ -183,6 +213,7 @@ border-radius: 50px;
 position: absolute;
 right: 0;
 top: 5px;
+cursor: pointer;
 @media (max-width: 760px){
     font-size: 75%;
 }

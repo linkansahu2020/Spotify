@@ -2,7 +2,7 @@ import { ADD_BACKGROUND, ADD_USER } from "./action";
 
 const initialStore = {
     user: null,
-    background: 'green',
+    background: 'darkslategray',
 }
 
 export const reducer = (store=initialStore,{type,payload})=>{
