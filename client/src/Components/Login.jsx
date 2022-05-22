@@ -4,8 +4,12 @@ import { FaApple,FaFacebookSquare } from 'react-icons/fa';
 import { SmallText } from './LandingPage';
 import { Link, useNavigate } from 'react-router-dom';
 import { AlertDiv } from './Signup';
-import { signInWithFacebook, signInWithGoogle } from '../Firebase/firebase';
+import { signInWithFacebook } from '../Firebase/firebase';
 import axios from 'axios';
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { auth } from '../Firebase/firebase';
+import { useDispatch } from 'react-redux';
+import { addUser } from '../Redux/action';
 
 export default function Login() {
     const passwordValidation = /((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/;
@@ -20,6 +24,7 @@ export default function Login() {
         message: 'Please provide valid email id or password'
     })
     const navigate = useNavigate();
+    const dispatch = useDispatch()
 
 
     useEffect(()=>{
@@ -29,6 +34,21 @@ export default function Login() {
     const handelChange = (event)=>{
         setAlertMessage({...alertMessage,display: 'none'})
         setUserData({...userData,[event.target.name]:event.target.value});
+    }
+
+    const signInWithGoogle = ()=>{
+        const provider = new GoogleAuthProvider();
+        signInWithPopup(auth,provider).then(result => {
+            axios.post('http://localhost:8080/login',{
+                email: result.user.email,
+                password: "Google@1234"
+            }).then(res=>{
+                dispatch(addUser(res.data.user))
+                navigate('/')
+            })
+        }).catch(err=>{
+            console.log(err)
+        })
     }
 
     const handelLogin = ()=>{
@@ -41,7 +61,8 @@ export default function Login() {
             return;
         }
         axios.post('http://localhost:8080/login',userData).then(res=>{
-            navigate('/')
+            dispatch(addUser(res.data.user))
+            navigate('/');
         })
     }
   return (
@@ -56,7 +77,7 @@ export default function Login() {
             <AlertDiv display={alertMessage.display}>{alertMessage.message}</AlertDiv>
             <ContinueButton color='whitesmoke' background='#3b5998' onClick={()=>signInWithFacebook("login")}><FaFacebookSquare className='logo'/> CONTINUE WITH FACEBOOK</ContinueButton>
             <ContinueButton color='whitesmoke' background='#191919'><FaApple className='logo'/> CONTINUE WITH APPLE</ContinueButton>
-            <ContinueButton color='#6a6a6a' onClick={()=>signInWithGoogle("login")}>
+            <ContinueButton color='#6a6a6a' onClick={signInWithGoogle}>
                 <img src="https://imgs.search.brave.com/YKmkf4jY-3uPEAMwszoQeBxLi74CoPJqzoePtO0SriA/rs:fit:1200:1200:1/g:ce/aHR0cHM6Ly9zNDgy/Ny5wY2RuLmNvL3dw/LWNvbnRlbnQvdXBs/b2Fkcy8yMDE4LzA0/L0dvb2dsZS1sb2dv/LTIwMTUtRy1pY29u/LnBuZw" width='35px' className='google_logo' alt="" />
                 CONTINUE WITH GOOGLE
             </ContinueButton>
@@ -132,7 +153,7 @@ cursor: pointer;
 }
 & > .google_logo{
     position: absolute;
-    left: 5.5vw;
+    left: 5vw;
     top: 1vh;
 }
 `

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const artistSchema = new mongoose.Schema(
+const audioschema = new mongoose.Schema(
     {
         title:{type: String, required: true},
         image: {type: String, required: true},
@@ -17,4 +17,4 @@ const artistSchema = new mongoose.Schema(
     }
 )
 
-module.exports = mongoose.model('artists',artistSchema)
+module.exports = mongoose.model('audios',audioschema)

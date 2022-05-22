@@ -1,9 +1,15 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import styled from 'styled-components'
+import styled from 'styled-components';
+import axios from 'axios';
 
 export default function Body({children}) {
   const background = useSelector((state)=>state.background)
+  React.useEffect(()=>{
+    axios.get('https://localhost:8080/userData').then(res=>{
+      console.log(res.data)
+    })
+  })
   return (
     <Container background={background}>{children}</Container>
   )

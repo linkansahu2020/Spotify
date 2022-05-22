@@ -46,6 +46,7 @@ const login = async (req,res)=>{
         const token = newToken(user);
 
         res.status(202).cookie('token', token, {
+            sameSite: 'strict',
             httpOnly: true,
         }).send({user,token})
     

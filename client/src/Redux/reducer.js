@@ -1,7 +1,8 @@
-import { ADD_BACKGROUND, ADD_USER } from "./action";
+import { ADD_BACKGROUND, ADD_TOKEN, ADD_USER } from "./action";
 
 const initialStore = {
     user: null,
+    token: null,
     background: 'darkslategray',
 }
 
@@ -11,6 +12,8 @@ export const reducer = (store=initialStore,{type,payload})=>{
             return {...store,user:payload};
         case ADD_BACKGROUND:
             return {...store,background:payload};
+        case ADD_TOKEN:
+            return {...store,token:payload};
         default:
             return store
     }

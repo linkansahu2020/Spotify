@@ -4,8 +4,10 @@ import { SmallText } from './LandingPage'
 import { ContinueButton, FormDiv, Input, InputDiv, Logo, LogoContainer, OrDiv } from './Login'
 import { FaFacebookSquare } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-import { signInWithFacebook, signInWithGoogle } from '../Firebase/firebase';
+// import { signInWithFacebook, signInWithGoogle } from '../Firebase/firebase';
 import axios from 'axios';
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { auth } from '../Firebase/firebase';
 
 export default function Signup() {
     const passwordValidation = /((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/;
@@ -29,6 +31,22 @@ export default function Signup() {
     const handelChange = (event)=>{
         setAlertMessage({display: 'none', message: ''})
         setUserData({...userData,[event.target.name]:event.target.value});
+    }
+
+    const signInWithGoogle = ()=>{
+        const provider = new GoogleAuthProvider();
+        signInWithPopup(auth,provider).then(result => {
+            axios.post('http://localhost:8080/signup',{
+                email: result.user.email,
+                password: "Google@1234",
+                display_name: result.user.email.split("@")[0],
+                display_picture: result.user.photoURL
+            }).then(res=>{
+                console.log(res)
+            })
+        }).catch(err=>{
+            console.log(err)
+        })
     }
     
     const handelSignup = ()=>{
@@ -60,11 +78,8 @@ export default function Signup() {
         </LogoContainer>
         <FormDiv>
             <AlertDiv display={alertMessage.display}>{alertMessage.message}</AlertDiv>
-            <ContinueButton color='whitesmoke' background='#3b5998' onClick={()=>{
-                const user = signInWithFacebook()
-                console.log(user)
-            }}><FaFacebookSquare className='logo'/> CONTINUE WITH FACEBOOK</ContinueButton>
-            <ContinueButton color='#6a6a6a' onClick={()=>signInWithGoogle()}>
+            <ContinueButton color='whitesmoke' background='#3b5998' onClick={signInWithGoogle}><FaFacebookSquare className='logo'/> CONTINUE WITH FACEBOOK</ContinueButton>
+            <ContinueButton color='#6a6a6a' onClick={signInWithGoogle}>
                 <img src="https://imgs.search.brave.com/YKmkf4jY-3uPEAMwszoQeBxLi74CoPJqzoePtO0SriA/rs:fit:1200:1200:1/g:ce/aHR0cHM6Ly9zNDgy/Ny5wY2RuLmNvL3dw/LWNvbnRlbnQvdXBs/b2Fkcy8yMDE4LzA0/L0dvb2dsZS1sb2dv/LTIwMTUtRy1pY29u/LnBuZw" width='35px' className='google_logo' alt="" />
                 CONTINUE WITH GOOGLE
             </ContinueButton>
