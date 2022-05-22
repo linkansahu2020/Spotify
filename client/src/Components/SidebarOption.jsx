@@ -4,8 +4,8 @@ import styled from 'styled-components'
 export default function SidebarOption({option,icon}) {
   return (
     <SidebarOptionContainer>
-        {icon}
-        {option}
+      {icon}
+      {option}
     </SidebarOptionContainer>
   )
 }
@@ -21,9 +21,9 @@ display: flex;
 gap: 15px;
 align-items: center;
 &:hover{
-    color: white;
+  color: white;
 }
 &>.font-icon{
-    font-size: 22px;
+  font-size: 22px;
 }
 `
