@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useSelector,useDispatch } from 'react-redux'
 import styled from 'styled-components';
-import { addBackground } from '../Redux/action';
+import { addBackground, addCurrentPlaying, addCurrentPlayingList, addIndex, addLocation } from '../Redux/action';
 import BodyNavbar from './BodyNavbar'
 
 export default function Home() {
@@ -15,24 +15,28 @@ export default function Home() {
       currentIndex--;
       [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
     }
-
     return array;
   }
+  useEffect(()=>{
+    dispatch(addLocation('home'));
+  })
   return (
     <div>
       <BodyNavbar/>
-      <div style={{textAlign: 'left',color: 'white',border: '1px solid red'}}>
+      <div style={{textAlign: 'left',color: 'white'}}>
         <h1>Have a good day!</h1>
         <ForTheDay>
           <SpecialContainer>
             <img src="https://t3.ftcdn.net/jpg/01/41/29/86/240_F_141298613_C0yFMtH8JI74Aynb16HyCgeV30GwXK2Z.jpg" alt="LikeSong" />
             <Name>Liked Songs</Name>
           </SpecialContainer>
-          <div>hello</div>
-          <div>hello</div>
-          <div>hello</div>
-          <div>hello</div>
-          <div>hello</div>
+          {artists?suffleElements(artists).slice(0, 5).map(({_id,display_picture,name,color})=>
+            <SpecialContainer key={_id} onMouseEnter={()=>dispatch(addBackground(color))}>
+              <img src={display_picture} alt={`${name}`} />
+              <Name>{name}</Name>
+            </SpecialContainer>
+          )
+          :null}
         </ForTheDay>
         <Heading>
           <h2>Songs for you</h2>
@@ -40,11 +44,15 @@ export default function Home() {
         </Heading>
         <SongsContainer>
           {songs?
-          suffleElements(songs).slice(0, 8).map(({_id,audio,title,image})=>
-          <PlayContainer key={_id}>
+          suffleElements(songs).slice(0, 8).map(({_id,audio,title,image,artist},index,array)=>
+          <PlayContainer key={index} onClick={()=>{
+            dispatch(addCurrentPlaying({_id,audio,title,image,artist}));
+            dispatch(addIndex(index))
+            dispatch(addCurrentPlayingList(array))
+          }}>
             <img src={image} alt={title}/>
             <Name>{title}</Name>
-            <Description>Artist</Description>
+            <Description>{artist.name}</Description>
           </PlayContainer>)
           :null}
         </SongsContainer>
@@ -87,9 +95,10 @@ border-radius: 5px;
   background-color: rgb(71, 71, 71);
 }
 `
-const Name = styled.p`
+export const Name = styled.p`
 font-weight: bold;
 font-size: 15px;
+text-align: left;
 `
 const Description = styled.p`
 color: grey;
@@ -111,7 +120,7 @@ display: grid;
 grid-template-columns: repeat(3,1fr);
 grid-gap: 20px;
 `
-const SpecialContainer = styled.div`
+export const SpecialContainer = styled.div`
 display: flex;
 gap: 15px;
 background-color: rgba(52, 52, 52, 0.5);

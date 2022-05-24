@@ -16,7 +16,7 @@ export default function BodyNavbar() {
                 <IoIosArrowForward/>
             </IconDiv>
         </BackwordForeword>
-        <ButtonDiv>
+        <ButtonDiv style={{background:'tranparent', border: '1px solid grey'}}>
             Upgrade
         </ButtonDiv>
         <ButtonDiv className='profile'>
@@ -28,13 +28,12 @@ export default function BodyNavbar() {
 }
 
 const Container = styled.div`
-border: 1px solid red;
 background: ${props=>props.background};
 text-align: left;
 display: flex;
 justify-content: space-between;
 & .profile{
-    gap: 5px;
+    justify-content: space-between;
 }
 & .profile:hover{
     background: dimgray;
@@ -44,7 +43,6 @@ const BackwordForeword = styled.div`
 flex: 0.8;
 display: flex;
 align-items: center;
-border: 1px solid red;
 gap: 20px;
 `
 const IconDiv = styled.div`
@@ -60,7 +58,7 @@ padding: 2px;
 const ButtonDiv = styled.div`
 flex: 0.05;
 border: 1px solid white;
-padding: 5px 10px;
+padding: 3px 8px;
 background: rgba(18, 18, 18, 0.6);
 color: white;
 border-radius: 50px;

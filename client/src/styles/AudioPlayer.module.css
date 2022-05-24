@@ -159,18 +159,16 @@
   }
 
   .playingItem{
-    border: 1px solid red;
-    flex: 0.15;
+    flex: 0.25;
   }
 
   .progressBarButtons{
-    border: 1px solid red;
-    flex: 0.5;
+    flex: 0.4;
   }
 
   .actionKeys{
     border: 1px solid red;
-    flex: 0.15;
+    flex: 0.25;
   }
 
   .allControlledButton{
@@ -182,7 +180,6 @@
 
   .rangeBar{
     height: 40px;
-    border: 1px solid red;
     display: flex;
     justify-content: space-around;
     align-items: center;

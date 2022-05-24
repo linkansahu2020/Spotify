@@ -6,7 +6,7 @@ const Audio = require('../models/audio.model')
 
 router.get('/',async(req,res)=>{
     try{
-        const audio = await Audio.find().lean().exec();
+        const audio = await Audio.find().populate('artist').lean().exec();
         return res.status(200).send(audio);
     } catch(err){
         return res.status(401).send({Error:err.message});

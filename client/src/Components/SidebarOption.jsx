@@ -1,9 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 
-export default function SidebarOption({option,icon}) {
+export default function SidebarOption({option,icon,color}) {
   return (
-    <SidebarOptionContainer>
+    <SidebarOptionContainer color={color}>
       {icon}
       {option}
     </SidebarOptionContainer>
@@ -11,7 +11,7 @@ export default function SidebarOption({option,icon}) {
 }
 
 const SidebarOptionContainer = styled.div`
-color: grey;
+color: ${props=>props.color};
 cursor: pointer;
 height: 40px;
 transition: 200ms color ease-in;
