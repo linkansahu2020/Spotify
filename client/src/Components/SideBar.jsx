@@ -29,7 +29,7 @@ export default function SideBar() {
 
 const Container = styled.div`
 flex: 0.15;
-height: 100vh;
+height: 86vh;
 background-color: black;
 color: white;
 padding: 1%;

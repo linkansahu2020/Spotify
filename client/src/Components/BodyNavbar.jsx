@@ -30,7 +30,6 @@ export default function BodyNavbar() {
 const Container = styled.div`
 border: 1px solid red;
 background: ${props=>props.background};
-padding: 1% 30px;
 text-align: left;
 display: flex;
 justify-content: space-between;

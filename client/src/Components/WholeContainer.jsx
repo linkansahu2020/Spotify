@@ -5,13 +5,16 @@ import SideBar from './SideBar'
 import Body from './Body'
 
 export default function WholeContainer({body}) {
+  React.useEffect(()=>{
+    document.getElementsByTagName('title')[0].innerText='Spotify - Web Player';
+  })
   return (
     <>
     <Container>
-        <SideBar/>
-        <Body>
-          {body}
-        </Body>
+      <SideBar/>
+      <Body>
+        {body}
+      </Body>
     </Container>
     <AudioPlayer/>
     </>
