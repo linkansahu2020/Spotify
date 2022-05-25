@@ -31,6 +31,15 @@ router.post('/',async(req,res)=>{
     }
 })
 
+router.put('/:id',async(req,res)=>{
+    try{
+        const audio = await Audio.findByIdAndUpdate(req.params.id,req.body);
+        return res.status(200).send(audio);
+    } catch(err){
+        return res.status(401).send({Error:err.message});
+    }
+})
+
 router.delete('/:id',async(req,res)=>{
     try{
         const audio = await Audio.findByIdAndDelete(req.params.id).lean().exec();

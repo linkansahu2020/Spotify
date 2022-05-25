@@ -6,7 +6,7 @@ const Like = require('../models/like.model')
 
 router.get('/',async(req,res)=>{
     try{
-        const like = await Like.find().lean().exec();
+        const like = await Like.find().populate([{path:'audio_ids', populate:{path:'artist'}}]).lean().exec();
         return res.status(200).send(like);
     } catch(err){
         return res.status(401).send({Error:err.message});
@@ -22,12 +22,26 @@ router.get('/:id',async(req,res)=>{
     }
 })
 
-router.post('/',async(req,res)=>{
+router.post('',async(req,res)=>{
     try{
-        const user = await Like.findOne({name: req.body.id}).lean().exec();
-        if(user) return res.status(402).send("Try with another name");
-        const like = await Like.create(req.body);
-        return res.status(200).send(like);
+        const user = await Like.findOne({user_id: req.query.user}).lean().exec();
+        let like;
+        if(!user){
+            like = await Like.create({
+                user_id: req.query.user,
+                audio_ids: [req.query.audio]
+            })
+            return res.status(200).send(like);
+        }
+        let updateDocument;
+        if(!user.audio_ids.find(ele=>ele==req.query.audio)){
+            updateDocument = {$push: { audio_ids: req.query.audio }}
+            like = await Like.findOneAndUpdate({user_idme: req.query.user},updateDocument,{
+                new:true
+            });
+            return res.status(200).send(like);
+        }
+        return res.status(200).send("You already liked this song");
     } catch(err){
         return res.status(401).send({Error:err.message});
     }
