@@ -7,6 +7,8 @@ export const ADD_CURRENTPLAYING = 'ADD_CURRENTPLAYING';
 export const ADD_CURRENTPLAYINGLIST = 'ADD_CURRENTPLAYINGLIST';
 export const ADD_LOCATION = 'ADD_LOCATION';
 export const ADD_INDEX = 'ADD_INDEX';
+export const ADD_LIKEDSONGS = 'ADD_LIKEDSONGS';
+export const ADD_LIKE = 'ADD_LIKE';
 
 export const addUser = (payload)=>({type:ADD_USER, payload});
 export const addBackground = (payload)=>({type:ADD_BACKGROUND, payload});
@@ -17,3 +19,6 @@ export const addCurrentPlaying = (payload)=>({type:ADD_CURRENTPLAYING, payload})
 export const addCurrentPlayingList = (payload)=>({type:ADD_CURRENTPLAYINGLIST, payload});
 export const addLocation = (payload)=>({type:ADD_LOCATION, payload});
 export const addIndex = (payload)=>({type:ADD_INDEX, payload});
+
+export const addLikedSongs = (payload)=>({type:ADD_LIKEDSONGS, payload});
+export const addLike= (payload)=>({type:ADD_LIKE, payload});

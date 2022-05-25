@@ -167,8 +167,11 @@
   }
 
   .actionKeys{
-    border: 1px solid red;
     flex: 0.25;
+    font-size: 20px;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
   }
 
   .allControlledButton{

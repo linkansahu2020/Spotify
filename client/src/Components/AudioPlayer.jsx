@@ -2,12 +2,12 @@ import React, { useState, useRef, useEffect, useCallback } from 'react'
 import styles from "../styles/AudioPlayer.module.css";
 import { FaPlay } from "react-icons/fa"
 import { FaPause,FaStepForward,FaStepBackward } from "react-icons/fa"
-import { BsArrowRepeat } from 'react-icons/bs'
+import { BsArrowRepeat, BsVolumeDownFill } from 'react-icons/bs'
 import { IoShuffleOutline } from 'react-icons/io5'
 import { useDispatch, useSelector} from 'react-redux'
 import { Name, SpecialContainer } from './Home';
-import { AiOutlineLike } from 'react-icons/ai'
 import { addCurrentPlaying, addIndex } from '../Redux/action';
+import Like from './Like';
 
 export default function AudioPlayer(){
   const dispatch = useDispatch();
@@ -20,16 +20,22 @@ export default function AudioPlayer(){
   const [isRepeat, setIsRepeat] = useState(false);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
-  const [currentColor,setCurrentColor] = useState(false);
+  const [currentVolume, setCurrentVolume] = useState(100);
 
   const audioPlayer = useRef();
   const progressBar = useRef();
+  const volumeProgressBar = useRef();
   const animationRef = useRef();
 
   const changePlayerCurrentTime = useCallback(() => {
     progressBar.current.style.setProperty('--seek-before-width', `${progressBar.current.value / duration * 100}%`)
     setCurrentTime(progressBar.current.value);
   },[duration])
+
+  const changePlayerCurrentVolume = useCallback(() => {
+    volumeProgressBar.current.style.setProperty('--seek-before-width', `${volumeProgressBar.current.value}%`)
+    setCurrentVolume(volumeProgressBar.current.value);
+  },[])
 
   const nextSong = useCallback(()=>{
     audioPlayer.current.pause();
@@ -63,6 +69,10 @@ export default function AudioPlayer(){
     }
   },[audio?.audio,whilePlaying])
 
+  useEffect(()=>{
+    volumeProgressBar.current.style.setProperty('--seek-before-width', `${volumeProgressBar.current.value}%`)
+  })
+
   useEffect(() => {
     const seconds = Math.floor(audioPlayer.current.duration);
     setDuration(seconds);
@@ -93,6 +103,10 @@ export default function AudioPlayer(){
     audioPlayer.current.currentTime = progressBar.current.value;
     changePlayerCurrentTime();
   }
+  const changeVolume = () => {
+    console.log(volumeProgressBar.current)
+    changePlayerCurrentVolume();
+  }
 
   const playingAudio = ()=>{
     return (
@@ -103,7 +117,8 @@ export default function AudioPlayer(){
         <Name style={{width: 'auto', lineHeight:'11px'}}>
           <div style={{display: 'flex', gap:'15px',alignItems: 'center'}}>
             <p>{audio.title}</p>
-            <AiOutlineLike style={{fontSize:'17px',color:`${currentColor?'#00b24a':'white'}`}} onClick={()=>setCurrentColor(prev=>!prev)}/>
+            <Like/>
+            {/* <AiOutlineLike style={{fontSize:'17px',color:`${currentColor?'#00b24a':'white'}`}} onClick={()=>setCurrentColor(prev=>!prev)}/> */}
           </div>
           <span style={{color: 'grey', fontSize: '13px', fontWeight: 'normal', cursor: 'pointer'}}>{audio.artist.name}</span>
         </Name>
@@ -126,7 +141,7 @@ export default function AudioPlayer(){
     <div className={styles.audioPlayer}>
         <div className={styles.playingItem}>{playingAudio()}</div>
         <div className={styles.progressBarButtons}>
-            <audio ref={audioPlayer} src={audio.audio} preload="metadata"></audio>
+            <audio ref={audioPlayer} src={'https://pagalworld.nl/files/download/id/34169'} preload="metadata"></audio>
             <div className={styles.allControlledButton}>
                 <button className={styles.forwardBackward}><IoShuffleOutline /></button>
                 <button className={styles.forwardBackward} onClick={prevSong}><FaStepBackward /></button>
@@ -146,7 +161,12 @@ export default function AudioPlayer(){
                 <div className={styles.duration}>{(duration && !isNaN(duration)) ? calculateTime(duration) : '00:00'}</div>
             </div>
         </div>
-        <div className={styles.actionKeys}>hellokxjs</div>
+        <div className={styles.actionKeys}>
+          <div style={{width: '20%', display: 'flex', alignItems:'center'}}>
+            <input type="range" className={styles.progressBar} defaultValue={currentVolume} ref={volumeProgressBar} onChange={changeVolume} />
+          </div>
+          <BsVolumeDownFill/>
+        </div>
     </div>
   )
 }

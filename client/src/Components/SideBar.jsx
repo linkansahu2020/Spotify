@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux'
 
 export default function SideBar() {
   const location = useSelector(state=>state.location)
+  
   return (
     <Container>
       <div>

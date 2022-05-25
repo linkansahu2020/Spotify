@@ -1,9 +1,14 @@
 import React from 'react'
 import styled from 'styled-components'
+import { useNavigate } from 'react-router-dom'
 
 export default function SidebarOption({option,icon,color}) {
+  const navigate = useNavigate();
   return (
-    <SidebarOptionContainer color={color}>
+    <SidebarOptionContainer color={color} onClick={()=>{
+      console.log("hello")
+      if(option==='Home') navigate('/home');
+    }}>
       {icon}
       {option}
     </SidebarOptionContainer>

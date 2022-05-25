@@ -1,9 +1,12 @@
 import React from 'react'
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
+import { CgProfile } from 'react-icons/cg'
 
 export default function Navbar() {
     const navigate = useNavigate();
+    const user = useSelector(state=>state.user)
   return (
     <Container>
         <LogoDiv>
@@ -18,12 +21,19 @@ export default function Navbar() {
                 margin: 'auto',
                 borderRight: '.1px solid white',
             }}></div>
+            {user?
+            <ButtonDiv className='profile'>
+                <IconDiv><CgProfile/></IconDiv>
+                Profile
+            </ButtonDiv>:<>
             <Text onClick={()=>navigate('/signup')}>
                 Sign up
             </Text>
             <Text onClick={()=>navigate('/login')}>
                 Sign in
             </Text>
+            </>
+            }
         </MenuDiv>
     </Container>
   )
@@ -64,4 +74,32 @@ margin: auto 0px;
 &:hover{
     color: #1cd860;
 }
+`
+const ButtonDiv = styled.div`
+flex: 0.05;
+border: 1px solid white;
+padding: 3px 8px;
+background: rgba(18, 18, 18, 0.6);
+color: white;
+border-radius: 50px;
+font-size: 14px;
+font-weight: bold;
+display: flex;
+align-items: center;
+justify-content: center;
+transition: 200ms background-color ease-in;
+cursor: pointer;
+&>div{
+    color: white;
+}
+`
+const IconDiv = styled.div`
+background: rgba(18, 18, 18, 0.6);
+color: grey;
+font-size: 25px;
+display: flex;
+align-items: center;
+justify-content: center;
+border-radius: 50%;
+padding: 2px;
 `

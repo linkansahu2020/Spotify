@@ -1,10 +1,14 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import Footer from './Footer'
 import Navbar from './Navbar'
-// import { Button } from './ReuseableComponents'
 
 export default function LandingPage() {
+  const user = useSelector((state)=>state.user)
+  console.log('user:', user)
+  const navigate = useNavigate();
   return (
     <div>
         <Navbar/>
@@ -25,7 +29,7 @@ export default function LandingPage() {
                 <SmallText>SPOTIFY FREE</SmallText>
                 <BigContent>Listening is everything</BigContent>
                 <MediumText>Millions of songs and podcasts. No credit card needed.</MediumText>
-                <Button color='#2941ab' background='#1cd860'>GET SPOTIFY FREE</Button>
+                <Button color='#2941ab' background='#1cd860' onClick={()=>user?navigate('/home'):null}>{user?"OPEN AUDIO PLAYER":"GET SPOTIFY FREE"}</Button>
             </TextContainer>
         </BlueContainer>
         <Footer/>

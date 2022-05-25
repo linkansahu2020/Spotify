@@ -9,6 +9,7 @@ const app = express();
 const UserController = require('./controllers/user.controller') 
 const ArtistController = require('./controllers/artist.controller') 
 const AudioController = require('./controllers/audio.controller')
+const LikeController = require('./controllers/like.controller')
 
 app.use(express.json());
 app.use(cors());
@@ -17,6 +18,7 @@ app.use(cookieParser());
 app.use('/users',UserController)
 app.use('/artists',ArtistController)
 app.use('/audios',AudioController)
+app.use('/likes',LikeController)
 
 app.post('/login', login);
 app.post('/signup', signup);
@@ -28,13 +30,6 @@ app.get('',async(req,res)=>{
         return res.status(404).send({Error:e.message});
     }
 })
-// app.get('/userdata',async(req,res)=>{
-//     try{
-        
-//     } catch(e){
-//         return res.status(404).send({Error:e.message});
-//     }
-// })
 
 const PORT = 8080;
 

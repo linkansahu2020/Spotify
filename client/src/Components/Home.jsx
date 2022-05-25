@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react'
 import { useSelector,useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { addBackground, addCurrentPlaying, addCurrentPlayingList, addIndex, addLocation } from '../Redux/action';
 import BodyNavbar from './BodyNavbar'
 
 export default function Home() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const artists = useSelector((state)=>state.artists);
   const songs = useSelector((state)=>state.songs);
   const suffleElements = (array)=>{
@@ -63,7 +65,7 @@ export default function Home() {
         <SongsContainer>
           {artists?
           suffleElements(artists).slice(0, 8).map(({_id,display_picture,name,color})=>
-          <PlayContainer key={_id} onMouseEnter={()=>dispatch(addBackground(color))}>
+          <PlayContainer key={_id} onMouseEnter={()=>dispatch(addBackground(color))} onClick={()=>navigate(`/artist/${_id}`)}>
             <img src={display_picture} alt={name} style={{borderRadius:'50%'}}/>
             <Name>{name}</Name>
             <Description>Artist</Description>
