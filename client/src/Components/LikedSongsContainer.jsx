@@ -20,14 +20,14 @@ export default function LikedSongsContainer() {
           <img src={'https://t3.ftcdn.net/jpg/01/41/29/86/240_F_141298613_C0yFMtH8JI74Aynb16HyCgeV30GwXK2Z.jpg'} alt={'All Songs'} />
         </ImageContainer>
         <div>
-          <Name>ALL SONGS</Name>
+          <Name>LIKED SONGS</Name>
           <span style={{fontSize:'14px', color: 'grey'}}>{`${songs?.length} songs`}</span>
         </div>
       </ArtistDescription>
       <Songs>
         {songs?.length>0 ? 
         <>
-        <h2>Popular</h2>
+        <h2>You liked</h2>
         {songs?.map((ele,index,array)=>
             <SingleSong key={ele._id}>
                 <Sl>{index+1}</Sl>
@@ -39,7 +39,7 @@ export default function LikedSongsContainer() {
                     <img src={ele.image} alt="" />
                     {ele.title}
                 </IndSong>
-                <Like style={{flex: '0.1'}}/>
+                <Like style={{flex: '0.1'}} audio={ele}/>
             </SingleSong>
         )}
         </>

@@ -55,7 +55,7 @@ export default function ArtistContainer() {
                     <img src={ele.image} alt="" />
                     {ele.title}
                 </IndSong>
-                <Like style={{flex: '0.1'}}/>
+                <Like style={{flex: '0.1'}} audio={ele}/>
             </SingleSong>
         )}
         </>

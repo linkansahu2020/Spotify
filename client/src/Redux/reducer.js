@@ -1,4 +1,4 @@
-import { ADD_ARTISTS, ADD_BACKGROUND, ADD_CURRENTPLAYING, ADD_CURRENTPLAYINGLIST, ADD_INDEX, ADD_LIKE, ADD_LIKEDSONGS, ADD_LOCATION, ADD_SONGS, ADD_TOKEN, ADD_USER } from "./action";
+import { ADD_ARTISTS, ADD_BACKGROUND, ADD_CURRENTPLAYING, ADD_CURRENTPLAYINGLIST, ADD_INDEX, ADD_LIKE, ADD_LIKEDSONGS, ADD_LOCATION, ADD_SONGS, ADD_TOKEN, ADD_USER, REMOVE_LIKE } from "./action";
 
 const initialStore = {
     user: null,
@@ -37,6 +37,8 @@ export const reducer = ( store = initialStore, { type,payload }) => {
             return {...store, liked_songs:payload};
         case ADD_LIKE: 
             return {...store, liked_songs:[...store.liked_songs,payload]};
+        case REMOVE_LIKE:
+            return {...store, liked_songs: store.liked_songs.filter(ele=>ele!==payload)};
         default:
             return store;
     }

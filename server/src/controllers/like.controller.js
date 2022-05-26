@@ -37,12 +37,23 @@ router.post('',authenticate,async(req,res)=>{
         let updateDocument;
         if(!user.audio_ids.find(ele=>ele==req.query.audio)){
             updateDocument = {$push: { audio_ids: req.query.audio }}
-            like = await Like.findOneAndUpdate({user_idme: req.query.user},updateDocument,{
+            like = await Like.findOneAndUpdate({user_id: req.query.user},updateDocument,{
                 new:true
             });
             return res.status(200).send(like);
         }
         return res.status(200).send("You already liked this song");
+    } catch(err){
+        return res.status(401).send({Error:err.message});
+    }
+})
+
+router.put('',authenticate,async(req,res)=>{
+    try{
+        const like = await Like.findOne({user_id: req.query.user}).lean().exec();
+        const likeSongs = like.audio_ids.filter((ele)=>ele.toString()!==req.query.audio);
+        const updateLikes = await Like.findOneAndUpdate({user_id: req.query.user},{audio_ids: likeSongs},{new: true});
+        return res.status(200).send(updateLikes);
     } catch(err){
         return res.status(401).send({Error:err.message});
     }

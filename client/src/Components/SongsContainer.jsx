@@ -18,14 +18,14 @@ export default function SongsContainer() {
         </ImageContainer>
         <div>
           <Name>ALL SONGS</Name>
-          <span style={{fontSize:'14px', color: 'grey'}}>{`${songs.length} songs`}</span>
+          <span style={{fontSize:'14px', color: 'grey'}}>{`${songs?.length} songs`}</span>
         </div>
       </ArtistDescription>
       <Songs>
-        {songs.length>0 ? 
+        {songs?.length>0 ? 
         <>
-        <h2>Popular</h2>
-        {songs.map((ele,index,array)=>
+        <h2>Experience everything</h2>
+        {songs?.map((ele,index,array)=>
             <SingleSong key={ele._id}>
                 <Sl>{index+1}</Sl>
                 <IndSong onClick={()=>{
@@ -36,7 +36,7 @@ export default function SongsContainer() {
                     <img src={ele.image} alt="" />
                     {ele.title}
                 </IndSong>
-                <Like style={{flex: '0.1'}}/>
+                <Like style={{flex: '0.1'}} audio={ele}/>
             </SingleSong>
         )}
         </>

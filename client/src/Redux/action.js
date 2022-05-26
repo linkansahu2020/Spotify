@@ -9,6 +9,7 @@ export const ADD_LOCATION = 'ADD_LOCATION';
 export const ADD_INDEX = 'ADD_INDEX';
 export const ADD_LIKEDSONGS = 'ADD_LIKEDSONGS';
 export const ADD_LIKE = 'ADD_LIKE';
+export const REMOVE_LIKE = 'REMOVE_LIKE';
 
 export const addUser = (payload)=>({type:ADD_USER, payload});
 export const addBackground = (payload)=>({type:ADD_BACKGROUND, payload});
@@ -22,3 +23,4 @@ export const addIndex = (payload)=>({type:ADD_INDEX, payload});
 
 export const addLikedSongs = (payload)=>({type:ADD_LIKEDSONGS, payload});
 export const addLike= (payload)=>({type:ADD_LIKE, payload});
+export const removeLike= (payload)=>({type:REMOVE_LIKE, payload});
