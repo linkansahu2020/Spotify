@@ -3,26 +3,27 @@ const express = require('express');
 const router = express.Router();
 
 const Like = require('../models/like.model')
+const authenticate = require('../middlewares/authenticate')
 
 router.get('/',async(req,res)=>{
     try{
-        const like = await Like.find().populate([{path:'audio_ids', populate:{path:'artist'}}]).lean().exec();
+        const like = await Like.find().lean().exec();
         return res.status(200).send(like);
     } catch(err){
         return res.status(401).send({Error:err.message});
     }
 })
 
-router.get('/:id',async(req,res)=>{
+router.get('/:id',authenticate,async(req,res)=>{
     try{
-        const like = await Like.findByIOne({user_id: req.params.id}).lean().exec();
+        const like = await Like.findOne({user_id: req.params.id}).populate([{path:'audio_ids', populate:{path:'artist'}}]).lean().exec();
         return res.status(200).send(like);
     } catch(err){
         return res.status(401).send({Error:err.message});
     }
 })
 
-router.post('',async(req,res)=>{
+router.post('',authenticate,async(req,res)=>{
     try{
         const user = await Like.findOne({user_id: req.query.user}).lean().exec();
         let like;

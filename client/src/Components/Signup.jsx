@@ -3,15 +3,20 @@ import styled from 'styled-components'
 import { SmallText } from './LandingPage'
 import { ContinueButton, FormDiv, Input, InputDiv, Logo, LogoContainer, OrDiv } from './Login'
 import { FaFacebookSquare } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 // import { signInWithFacebook, signInWithGoogle } from '../Firebase/firebase';
 import axios from 'axios';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { auth } from '../Firebase/firebase';
+import { useDispatch } from 'react-redux';
+import { addToken, addUser } from '../Redux/action';
 
 export default function Signup() {
     const passwordValidation = /((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/;
     const emailValidation = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    const dispatch = useDispatch()
+    const navigate = useNavigate();
 
     const [userData,setUserData] = useState({
         email: '',
@@ -42,7 +47,13 @@ export default function Signup() {
                 display_name: result.user.email.split("@")[0],
                 display_picture: result.user.photoURL
             }).then(res=>{
-                console.log(res)
+                const user = res.data.user;
+                const token = res.data.token;
+                localStorage.setItem('user',JSON.stringify(user));
+                localStorage.setItem('token',JSON.stringify(token));
+                dispatch(addUser(user));
+                dispatch(addToken(token));
+                navigate('/home');
             })
         }).catch(err=>{
             console.log(err)
@@ -66,6 +77,14 @@ export default function Signup() {
             email: userData.email,
             password: userData.password,
             display_name: userData.username,
+        }).then(res=>{
+            const user = res.data.user;
+            const token = res.data.token;
+            localStorage.setItem('user',JSON.stringify(user));
+            localStorage.setItem('token',JSON.stringify(token));
+            dispatch(addUser(user));
+            dispatch(addToken(token));
+            navigate('/home');
         })
     }
 

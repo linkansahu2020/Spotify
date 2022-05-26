@@ -1,11 +1,16 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { IoIosArrowBack,IoIosArrowForward } from 'react-icons/io';
 import { CgProfile } from 'react-icons/cg'
+import { addToken, addUser } from '../Redux/action';
+import { useNavigate } from 'react-router-dom';
 
 export default function BodyNavbar() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const background = useSelector((state)=>state.background)
+  const user = useSelector((state)=>state.user)
   return (
     <Container background={background}>
         <BackwordForeword>
@@ -19,10 +24,27 @@ export default function BodyNavbar() {
         <ButtonDiv style={{background:'tranparent', border: '1px solid grey'}}>
             Upgrade
         </ButtonDiv>
-        <ButtonDiv className='profile'>
-            <IconDiv><CgProfile/></IconDiv>
-            Profile
-        </ButtonDiv>
+        <DropdownContainer style={{position: 'relative',}}>
+            <ButtonDiv className='profile'>
+                {user?.display_picture?
+                <div style={{width: '30px'}}>
+                    <img src={user.display_picture} width='100%' style={{borderRadius: '50%'}} alt="" />
+                </div>:
+                <IconDiv><CgProfile/></IconDiv>
+                }
+                {user?.display_name}
+            </ButtonDiv>
+            <Dropdown className='dropdown-1'>
+                <p>Account</p>
+                <p onClick={()=>{
+                    dispatch(addToken(null));
+                    dispatch(addUser(null));
+                    localStorage.removeItem('user');
+                    localStorage.removeItem('token');
+                    navigate('/');
+                }}>Logout</p>
+            </Dropdown>
+        </DropdownContainer>
     </Container>
   )
 }
@@ -33,7 +55,7 @@ text-align: left;
 display: flex;
 justify-content: space-between;
 & .profile{
-    justify-content: space-between;
+    gap: 5px;
 }
 & .profile:hover{
     background: dimgray;
@@ -70,6 +92,32 @@ justify-content: center;
 transition: 200ms background-color ease-in;
 cursor: pointer;
 &>div{
+    color: white;
+}
+`
+export const DropdownContainer = styled.div`
+position: relative;
+&:hover .dropdown-1{
+    display: block;
+}
+`
+export const Dropdown = styled.div`
+width: 100%;
+position: absolute;
+color: grey;
+background-color: #2d2c2c;
+z-index: 2;
+padding: 20%;
+right: 0;
+font-weight: bold;
+border-radius: 5px;
+margin-top: 2%;
+display: none;
+line-height: 15px;
+&>p{
+    cursor: pointer;
+}
+&>p:hover{
     color: white;
 }
 `

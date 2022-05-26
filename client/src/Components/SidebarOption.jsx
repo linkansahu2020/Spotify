@@ -6,8 +6,8 @@ export default function SidebarOption({option,icon,color}) {
   const navigate = useNavigate();
   return (
     <SidebarOptionContainer color={color} onClick={()=>{
-      console.log("hello")
-      if(option==='Home') navigate('/home');
+      if(option === 'Home') navigate('/home');
+      else if(option === 'Liked Songs') navigate('/likes');
     }}>
       {icon}
       {option}

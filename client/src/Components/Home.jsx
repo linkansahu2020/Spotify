@@ -28,7 +28,7 @@ export default function Home() {
       <div style={{textAlign: 'left',color: 'white'}}>
         <h1>Have a good day!</h1>
         <ForTheDay>
-          <SpecialContainer>
+          <SpecialContainer onClick={()=>navigate('/likes')}>
             <img src="https://t3.ftcdn.net/jpg/01/41/29/86/240_F_141298613_C0yFMtH8JI74Aynb16HyCgeV30GwXK2Z.jpg" alt="LikeSong" />
             <Name>Liked Songs</Name>
           </SpecialContainer>
@@ -42,7 +42,7 @@ export default function Home() {
         </ForTheDay>
         <Heading>
           <h2>Songs for you</h2>
-          <span>SEE ALL</span>
+          <span onClick={()=>navigate('/songs')}>SEE ALL</span>
         </Heading>
         <SongsContainer>
           {songs?
@@ -82,14 +82,14 @@ grid-template-columns: repeat(8,1fr);
 gap: 20px;
 `
 const PlayContainer = styled.div`
-height: auto;
 background-color: rgb(52, 52, 52);
 transition: 200ms background-color ease-in;
-padding: 15px;
+padding: 10%;
 border-radius: 5px;
+height: auto;
 &>img{
   width: 100%;
-  height: 150px;
+  height: 67%;
   border-radius: 5px;
   object-fit: cover;
 }

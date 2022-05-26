@@ -36,7 +36,7 @@ export const reducer = ( store = initialStore, { type,payload }) => {
         case ADD_LIKEDSONGS: 
             return {...store, liked_songs:payload};
         case ADD_LIKE: 
-            return {...store, liked_songs:[...liked_songs,payload]};
+            return {...store, liked_songs:[...store.liked_songs,payload]};
         default:
             return store;
     }

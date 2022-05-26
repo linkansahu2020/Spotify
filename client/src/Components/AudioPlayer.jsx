@@ -117,7 +117,7 @@ export default function AudioPlayer(){
         <Name style={{width: 'auto', lineHeight:'11px'}}>
           <div style={{display: 'flex', gap:'15px',alignItems: 'center'}}>
             <p>{audio.title}</p>
-            <Like/>
+            <Like audio={audio}/>
             {/* <AiOutlineLike style={{fontSize:'17px',color:`${currentColor?'#00b24a':'white'}`}} onClick={()=>setCurrentColor(prev=>!prev)}/> */}
           </div>
           <span style={{color: 'grey', fontSize: '13px', fontWeight: 'normal', cursor: 'pointer'}}>{audio.artist.name}</span>
@@ -141,7 +141,7 @@ export default function AudioPlayer(){
     <div className={styles.audioPlayer}>
         <div className={styles.playingItem}>{playingAudio()}</div>
         <div className={styles.progressBarButtons}>
-            <audio ref={audioPlayer} src={'https://pagalworld.nl/files/download/id/34169'} preload="metadata"></audio>
+            <audio ref={audioPlayer} src={audio?.audio} preload="metadata"></audio>
             <div className={styles.allControlledButton}>
                 <button className={styles.forwardBackward}><IoShuffleOutline /></button>
                 <button className={styles.forwardBackward} onClick={prevSong}><FaStepBackward /></button>

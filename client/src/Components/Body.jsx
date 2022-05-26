@@ -1,15 +1,28 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
+import axios from 'axios';
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-// import axios from 'axios';
+import { addLikedSongs } from '../Redux/action';
 
 export default function Body({children}) {
   const background = useSelector((state)=>state.background)
-  // React.useEffect(()=>{
-  //   axios.get('https://localhost:8080/userData').then(res=>{
-  //     console.log(res.data)
-  //   })
-  // })
+  const user = JSON.parse(localStorage.getItem('user'));
+  const token = JSON.parse(localStorage.getItem('token'));
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  useEffect(()=>{
+    if(!user && !token) navigate('/');
+    else{
+      axios.get(`http://localhost:8080/likes/${user._id}`,{
+        headers: {
+          "Authorization": "Bearer " + token
+        }
+      }).then(res=>{
+        dispatch(addLikedSongs(res.data.audio_ids))
+      })
+    }
+  })
   return (
     <Container background={background}>{children}</Container>
   )

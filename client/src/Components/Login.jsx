@@ -8,8 +8,8 @@ import { signInWithFacebook } from '../Firebase/firebase';
 import axios from 'axios';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { auth } from '../Firebase/firebase';
-import { useDispatch } from 'react-redux';
-import { addUser } from '../Redux/action';
+import { useDispatch, useSelector } from 'react-redux';
+import { addToken, addUser } from '../Redux/action';
 
 export default function Login() {
     const passwordValidation = /((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/;
@@ -25,11 +25,12 @@ export default function Login() {
     })
     const navigate = useNavigate();
     const dispatch = useDispatch()
-
+    const user = useSelector(state => state.user);
 
     useEffect(()=>{
         document.getElementsByTagName('title')[0].innerText = 'Log in - Spotify';
-    },[])
+        if(user) navigate('/home')
+    },[user,navigate])
 
     const handelChange = (event)=>{
         setAlertMessage({...alertMessage,display: 'none'})
@@ -43,8 +44,13 @@ export default function Login() {
                 email: result.user.email,
                 password: "Google@1234"
             }).then(res=>{
-                dispatch(addUser(res.data.user))
-                navigate('/')
+                const user = res.data.user;
+                const token = res.data.token;
+                localStorage.setItem('user',JSON.stringify(user));
+                localStorage.setItem('token',JSON.stringify(token));
+                dispatch(addUser(user))
+                dispatch(addToken(token))
+                navigate('/home')
             })
         }).catch(err=>{
             console.log(err)
@@ -61,8 +67,13 @@ export default function Login() {
             return;
         }
         axios.post('http://localhost:8080/login',userData).then(res=>{
-            dispatch(addUser(res.data.user))
-            navigate('/');
+            const user = res.data.user;
+            const token = res.data.token;
+            localStorage.setItem('user',JSON.stringify(user));
+            localStorage.setItem('token',JSON.stringify(token));
+            dispatch(addUser(user))
+            dispatch(addToken(token))
+            navigate('/home');
         })
     }
   return (

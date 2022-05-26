@@ -1,11 +1,14 @@
 import React from 'react'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { CgProfile } from 'react-icons/cg'
+import { Dropdown, DropdownContainer } from './BodyNavbar';
+import { addToken, addUser } from '../Redux/action';
 
 export default function Navbar() {
     const navigate = useNavigate();
+    const dispatch = useDispatch()
     const user = useSelector(state=>state.user)
   return (
     <Container>
@@ -22,10 +25,22 @@ export default function Navbar() {
                 borderRight: '.1px solid white',
             }}></div>
             {user?
-            <ButtonDiv className='profile'>
-                <IconDiv><CgProfile/></IconDiv>
-                Profile
-            </ButtonDiv>:<>
+            <DropdownContainer>
+                <ButtonDiv className='profile'>
+                    <IconDiv><CgProfile/></IconDiv>
+                    Profile
+                </ButtonDiv>
+                <Dropdown className='dropdown-1'>
+                    <p>Account</p>
+                    <p onClick={()=>{
+                        dispatch(addToken(null));
+                        dispatch(addUser(null));
+                        localStorage.removeItem('user');
+                        localStorage.removeItem('token');
+                        navigate('/');
+                    }}>Logout</p>
+                </Dropdown>
+            </DropdownContainer>:<>
             <Text onClick={()=>navigate('/signup')}>
                 Sign up
             </Text>
