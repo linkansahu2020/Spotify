@@ -38,6 +38,6 @@ app.listen(PORT,async()=>{
         await connect();
         console.log("My port no is 8080")
     } catch(err){
-        console.log("something went wrong");
+        console.log("something went wrong",err);
     }
 })

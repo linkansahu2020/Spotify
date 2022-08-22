@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { FaFacebookF,FaTwitter,FaInstagram } from 'react-icons/fa';
+import { devices } from '../styles/devices';
 
 export default function Footer() {
   return (
@@ -60,7 +61,7 @@ export default function Footer() {
 const Container = styled.div`
 text-align: left;
 padding: 10vh 20vw;
-line-height: 0vh;
+// line-height: 0vh;
 justify-content: space-between;
 background: black;
 color: white;
@@ -78,7 +79,8 @@ display: flex;
 justify-content: space-between;
 position: relative;
 left: 10vw;
-line-height: 2vh;
+line-height: 16px;
+margin-left: 20px;
 @media (max-width: 1024px) {
     width: 50vw;
     left: 20vw;
@@ -86,7 +88,8 @@ line-height: 2vh;
 @media (max-width: 760px) {
     display: block;
     left: 0;
-    top: 5vh;
+    top: 55px;
+    margin-left: 0px;
     &>div{
         margin-bottom: 5vh;
         margin-left: 4vh;
@@ -95,39 +98,40 @@ line-height: 2vh;
 }
 `
 export const LogoDiv = styled.div`
-width: 7vw;
+width: 120px;
 position: absolute;
 left: 0;
 @media (max-width: 1024px) {
-    width: 17vw;
+    width: 150px;
 }
 @media (max-width: 760px) {
-    width: 25vw;
+    width: 130px;
 }
 `
 const HeadText = styled.p`
 font-weight: bold;
-font-size: 1.4vh;
+font-size: 12px;
 color: #929496;
 @media (max-width: 1024px) {
-    font-size: 1.2vh;
+    font-size: 10px;
 }
 @media (max-width: 760px) {
-    font-size: 1.5vh;
+    font-size: 10px;
 }
 `
 const Text = styled.p`
 font-weight: bold;
 cursor: pointer;
-font-size: 1.5vh;
+font-size: 12px;
+transition: .5s ease;
 &:hover{
     color: #1cd860;
 }
 @media (max-width: 1024px) {
-    font-size: 1.25vh;
+    font-size: 10px;
 }
 @media (max-width: 760px) {
-    font-size: 1.45vh;
+    // font-size: 1.45vh;
 }
 `
 const SocialMedia = styled.div`
@@ -143,17 +147,18 @@ gap: .6vw;
 const Media = styled.div`
 background: #222326;
 border-radius: 50%;
-padding: 1.5vh .8vw;
-font-size: 2.4vh;
+padding: 10px 10px 5px;
+font-size: 20px;
 cursor: pointer;
+transition: .5s ease;
 &:hover{
     color: #1cd860;
 }
 @media (max-width: 1024px) {
-    padding: .8vh 1vw;
+    // padding: .8vh 1vw;
 }
 @media (max-width: 760px) {
-    padding: .8vh 1.5vw;
+    // padding: 10px 10px 5px 10px;
 }
 `
 const MinorDiv = styled.div`
@@ -162,13 +167,14 @@ display: flex;
 gap: 1.5vw;
 color: #929496;
 & span{
-    font-size: 1.3vh;
+    font-size: 10px;
     cursor: pointer;
+    transition: .5s ease;
     &:hover{
         color: #1cd860;
     }
     @media (max-width: 1024px) {
-        font-size: 1.2vh;
+        font-size: 8px;
     }
 }
 `
