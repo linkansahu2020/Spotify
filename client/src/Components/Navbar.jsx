@@ -1,16 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { CgProfile } from "react-icons/cg";
 import { Dropdown, DropdownContainer } from "./BodyNavbar";
 import { addToken, addUser } from "../Redux/action";
-import { AiOutlineMenu, AiOutlineSetting } from "react-icons/ai";
+import { AiOutlineMenu } from "react-icons/ai";
+import { MobileNavbar } from "./MobileNavbar";
 
 export default function Navbar() {
+  const [isShowMobileNav, setIsShowMobileNav] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
+  const onMobileNavHandler = () => {
+    console.log("hihih")
+    document.querySelector("body").classList.toggle("overflow");
+    setIsShowMobileNav((prevState) => !prevState);
+  };
   return (
     <Container>
       <LogoDiv>
@@ -20,6 +27,7 @@ export default function Navbar() {
           alt=""
         />
       </LogoDiv>
+      <MobileNavbar isOpen={isShowMobileNav} onHandler={onMobileNavHandler}/>
       <MenuDiv>
         <Text>Premium</Text>
         <Text>Support</Text>
@@ -61,9 +69,11 @@ export default function Navbar() {
           </>
         )}
       </MenuDiv>
-      <ActionICon>
-        <AiOutlineMenu />
-      </ActionICon>
+      {!isShowMobileNav && (
+        <ActionICon>
+          <AiOutlineMenu onClick={onMobileNavHandler} />
+        </ActionICon>
+      )}
     </Container>
   );
 }
@@ -100,7 +110,7 @@ const Text = styled.p`
   cursor: pointer;
   font-size: 13px;
   margin: auto 0px;
-  transition: .5s ease;
+  transition: 0.5s ease;
   &:hover {
     color: #1cd860;
   }
@@ -141,9 +151,9 @@ const ActionICon = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    transition: .5s ease;
-    &:hover{
-        color: #1cd860;
+    transition: 0.5s ease;
+    &:hover {
+      color: #1cd860;
     }
   }
 `;

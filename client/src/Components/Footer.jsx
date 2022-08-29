@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { FaFacebookF,FaTwitter,FaInstagram } from 'react-icons/fa';
-import { devices } from '../styles/devices';
+// import { devices } from '../styles/devices';
 
 export default function Footer() {
   return (
